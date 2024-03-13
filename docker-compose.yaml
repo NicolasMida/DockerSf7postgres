@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+    db_postgres:
+        container_name: db_postgres_sf
+        image: postgres:15-alpine
+        environment:
+            - POSTGRES_USER=root
+            - POSTGRES_PASSWORD=azerty1234
+            - POSTGRES_DB=sf
+        volumes:
+            - './data/pg/sf:/var/lib/postgresql/data'
+        ports:
+            - '5432:5432'
+    webserver:
+        container_name: server_sf
+        image: 'ngix:1.25-alpine3.18'
+        working_dir: /www
+        volumes:
+            - '.symfony:/www/symfony'
+            - './.docker/nginx/nginx.conf:/etc/nginx/conf/conf.d/default.conf'
+          
